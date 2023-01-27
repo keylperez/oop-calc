@@ -3,15 +3,16 @@ package main.java.parking;
 import java.util.Date;
 
 public class Ticket {
-    private String vehicleType;
+    private VehicleType type;
     private String plateNumber;
     private Date entryTime;
     private Date exitTime;
     private double price;
     private String ticketId;
+    // private long duration;
 
-    public Ticket(String vehicleType, String plateNumber) {
-        this.vehicleType = vehicleType;
+    public Ticket(VehicleType type, String plateNumber) {
+        this.type = type;
         this.plateNumber = plateNumber;
         this.entryTime = new Date();
         this.ticketId = generateTicketId();
@@ -26,8 +27,8 @@ public class Ticket {
         return ticketId;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
+    public VehicleType getVehicleType() {
+        return type;
     }
 
     public String getPlateNumber() {
@@ -56,5 +57,9 @@ public class Ticket {
 
     public String getTicketId() {
         return ticketId;
+    }
+
+    public long calcDuration() {
+        return (exitTime.getTime() - entryTime.getTime()) / (60 * 60 * 1000);
     }
 }

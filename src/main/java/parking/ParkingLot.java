@@ -1,4 +1,4 @@
-notpackage main.java.parking;
+package main.java.parking;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +21,9 @@ public class ParkingLot {
         return MAX_SPACES - parkingSpaces.size();
     }
 
-    public static Ticket issueTicket(Vehicle vehicle) {
+    public static Ticket issueTicket(VehicleType type, String plate) {
         if (!isFull()) {
-            Ticket ticket = new Ticket(vehicle);
+            Ticket ticket = new Ticket(type, plate);
             parkingSpaces.add(ticket);
             return ticket;
         } else {
@@ -32,7 +32,7 @@ public class ParkingLot {
         }
     }
 
-    public static double releaseTicket(int ticketId) {
+    public static double releaseTicket(String ticketId) {
         for (Ticket ticket : parkingSpaces) {
             if (ticket.getTicketId().equals(ticketId)) {
                 ticket.setExitTime(new Date());

@@ -1,30 +1,21 @@
 package main.java.parking;
 
-public abstract class Vehicle {
+public class Vehicle {
 
-    private String plateNumber;
-    private String vehicleType;
+    private final VehicleType type;
+    private final String plateNumber;
 
-    public Vehicle(String plateNumber, String vehicleType) {
+    public Vehicle(VehicleType type, String plateNumber) {
+        this.type = type;
         this.plateNumber = plateNumber;
-        this.vehicleType = vehicleType;
     }
 
     public String getPlateNumber() {
         return plateNumber;
     }
 
-    public void setPlateNumber(String plateNumber) {
-        this.plateNumber = plateNumber;
+    public VehicleType getType() {
+        return type;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
-    }
-
-    public abstract int getPrice();
 }

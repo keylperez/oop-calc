@@ -1,5 +1,7 @@
 package main.java.parking;
 
+import java.util.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,11 +91,21 @@ public class ParkingSystem extends JFrame {
                 if (vehicleType.isEmpty() || plateNumber.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill out all fields");
                 } else {
+
                     if (ticketCount < maxCapacity) {
-                        Ticket newTicket = new Ticket(vehicleType, plateNumber);
+                        VehicleType type;
+                        if (VehicleType.CAR.toString() == vehicleType) {
+                            type = VehicleType.CAR;
+                        }
+                        if (VehicleType.MOTORCYCLE.toString() == vehicleType) {
+                            type = VehicleType.MOTORCYCLE;
+                        }
+
+                        System.out.println(type.CAR);
+
+                        Ticket newTicket = ParkingLot.issueTicket(type, plateNumber);
                         tickets[ticketCount] = newTicket;
                         ticketCount++;
-                        parkingLot.addVehicle();
                         parkingFullLabel.setVisible(false);
                         ticketIdLabel.setText("Ticket ID: " + newTicket.getTicketId());
                         vehicleTypeLabel.setText("Vehicle Type: " + newTicket.getVehicleType());
@@ -113,15 +125,15 @@ public class ParkingSystem extends JFrame {
                     JOptionPane.showMessageDialog(null, "Please enter a Ticket ID");
                 } else {
                     boolean found = false;
-                    for (int i = 0; i < ticketCount; i++) {
+                    for (int i = 0; i < ParkingLot.availableSpaces(); i++) {
                         if (tickets[i] != null && tickets[i].getTicketId().equals(ticketId)) {
                             found = true;
                             Ticket currentTicket = tickets[i];
                             tickets[i] = null;
                             ticketCount--;
-                            parkingLot.removeVehicle();
+                            ParkingLot.releaseTicket(ticketId);
                             exitTimeLabel.setText("Exit Time: " + currentTicket.getExitTime());
-                            priceLabel.setText("Price: $" + calculatePrice.calculate(currentTicket));
+                            priceLabel.setText("Price: $" + calculatePrice.calculatePrice(currentTicket));
                             exitTicketIdField.setText("");
                             break;
                         }

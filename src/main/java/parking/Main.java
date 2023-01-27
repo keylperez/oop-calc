@@ -1,13 +1,11 @@
+// package main.java.parking;
+
 import main.java.parking.ParkingSystem;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new ParkingSystem();
-            }
-        });
+        SwingUtilities.invokeLater(() -> new ParkingSystem());
     }
 }

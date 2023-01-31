@@ -1,6 +1,6 @@
 package main.java.parking;
 
-import java.util.*;
+// import java.util.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,26 +86,34 @@ public class ParkingSystem extends JFrame {
         // Add action listeners to buttons
         enterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 String vehicleType = vehicleTypeField.getText();
                 String plateNumber = plateNumberField.getText();
+
                 if (vehicleType.isEmpty() || plateNumber.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill out all fields");
                 } else {
 
                     if (ticketCount < maxCapacity) {
+                        // Ticket newTicket;
                         VehicleType type;
-                        if (VehicleType.CAR.toString() == vehicleType) {
-                            type = VehicleType.CAR;
-                        }
-                        if (VehicleType.MOTORCYCLE.toString() == vehicleType) {
-                            type = VehicleType.MOTORCYCLE;
-                        }
 
-                        System.out.println(type.CAR);
+                        if (VehicleType.CAR.label == vehicleType) {
+                            type = VehicleType.valueOf("CAR");
+                            // newTicket = ParkingLot.issueTicket(VehicleType.CAR, plateNumber);
+                        }
+                        if (VehicleType.MOTORCYCLE.label == vehicleType) {
+                            type = VehicleType.valueOf("MOTORCYCLE");
+                            // newTicket = ParkingLot.issueTicket(VehicleType.MOTORCYCLE, plateNumber);
+                        }
 
                         Ticket newTicket = ParkingLot.issueTicket(type, plateNumber);
+
+                        System.out.println(newTicket);
+
                         tickets[ticketCount] = newTicket;
                         ticketCount++;
+
                         parkingFullLabel.setVisible(false);
                         ticketIdLabel.setText("Ticket ID: " + newTicket.getTicketId());
                         vehicleTypeLabel.setText("Vehicle Type: " + newTicket.getVehicleType());
@@ -119,6 +127,7 @@ public class ParkingSystem extends JFrame {
             }
         });
         exitButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 String ticketId = exitTicketIdField.getText();
                 if (ticketId.isEmpty()) {
